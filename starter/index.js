@@ -86,3 +86,78 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+console.log("Financial Analysis");
+console.log("----------------")
+
+//Total months is the same as the length of the array
+
+console.log("Total Months: " + finances.length)
+
+//To calcuate total money, we need to separate the strings from the numbers
+//First we flatten out the array to remove nesting
+let concatFinance = finances.flat(finances.length);
+
+//Now we add together every second value (the numbers)
+let total = 0;
+let numbersOnly =[];
+
+for (i=1;i<concatFinance.length;i += 2) {
+    total = total+concatFinance[i];
+    numbersOnly.push(concatFinance[i]);
+}
+
+console.log("Total: $" + total);
+
+//let's also create a DatesOnly array, for use later
+
+let datesOnly = []
+for (i=0;i<concatFinance.length;i += 2) {
+    datesOnly.push(concatFinance[i]);
+}
+
+//To find the average difference, we first need to calculate those differences
+// and make them into their own array
+// we take each value (starting with the second, not the first) and minus the previous value from it, on loop
+// we then push the result into a new array, diffOnly
+
+let diffOnly = [];
+
+for (i=1; i < numbersOnly.length; i++) {
+    diffOnly.push(numbersOnly[i] - numbersOnly[i-1]);
+}
+
+// now we just total those differences
+
+let diffTotal = 0
+
+for (i=0;i<diffOnly.length;i++) {
+    diffTotal = diffTotal+diffOnly[i];
+}
+
+// we find their average
+
+let diffAvg=(diffTotal/[finances.length-1])
+
+// and then round it to the nearest 100th
+
+let diffAvgRound = Math.ceil(diffAvg*100) / 100;
+console.log("Average change: " + diffAvgRound);
+
+// to find the biggest differences in profit and loss we can search the array for
+//the biggest and smallest values using Math.min/.max
+
+let diffBigProfit = (Math.max(...diffOnly));
+let diffBigLoss = (Math.min(...diffOnly));
+
+// we need to find the index of those values within the diffOnly array
+// and then we can find the appropriate date by pulling that index [+1] from
+// the datesOnly array
+
+let = BigProfitIndex = diffOnly.indexOf(diffBigProfit);
+let = BigLossIndex = diffOnly.indexOf(diffBigLoss);
+
+console.log("Greatest Increase in Profits/Losses: " + datesOnly[BigProfitIndex+1] + "(+$" + diffOnly[BigProfitIndex] + ")");
+console.log("Greatest Decrease in Profits/Losses: " + datesOnly[BigLossIndex+1] + "(+$" + diffOnly[BigLossIndex] + ")");
+
+//Done!
+
